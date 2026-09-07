@@ -1,0 +1,15 @@
+Mini project Plan.xlsx
+
+# Dependencies
+node_modules/
+
+# Build files
+target/
+dist/
+
+# Environment files
+.env
+
+.project
+.classpath
+.settings/
