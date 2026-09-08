@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="order")
+@Table(name="ordertbl")
 public class OrderEntity {
 
 	@Id
@@ -39,9 +39,10 @@ public class OrderEntity {
 	}
 	private String Address;
 	
-	public String Address() {
+	public String getAddress() {
 		return Address;
 	}
+	
 	
 	public void setAddress(String address) {
 		this.Address=address;

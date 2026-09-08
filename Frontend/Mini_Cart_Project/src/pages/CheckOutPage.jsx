@@ -6,20 +6,42 @@ import { useEffect, useState } from "react"
 
 const CheckoutPage = () => {
 
-    const [grandTotal,setGrandTotal]=useState(0)
+    const [grandTotal, setGrandTotal] = useState(0)
+
+    const [customerName, setCustomerName] = useState("")
+    const [phoneNumber, setphoneNumber] = useState("")
+    const [address, setAddress] = useState("")
+
+    const [data, setData] = useState('')
 
 
 
-
-    const getGrandTotal=async ()=>{
-        const response=await axios.get(`http://localhost:8080/api/cart/getGrandTotal`)
+    const getGrandTotal = async () => {
+        const response = await axios.get(`http://localhost:8080/api/cart/getGrandTotal`)
         console.log(response.data)
         setGrandTotal(response.data)
     }
 
-    useEffect(()=>{
+    const formSubmitHandler = async (e) => {
+        e.preventDefault()
+        const orderData = {
+            CustomerName: customerName,
+            PhoneNumber: phoneNumber,
+            Address: address,
+            GrandTotal: grandTotal
+        }
+
+        const response = await axios.post(`http://localhost:8080/api/order/create`, orderData)
+        console.log(response.data);
+        setData(response.data)
+
+
+    }
+
+    useEffect(() => {
         getGrandTotal()
-    },[])
+        setData()
+    }, [])
 
 
     return (
@@ -32,7 +54,15 @@ const CheckoutPage = () => {
             </h1>
 
 
-            <div className='flex gap-10'>
+
+
+            <form className='flex gap-10' onSubmit={(e) => {
+
+                formSubmitHandler(e)
+                console.log("formSubmitted by:", customerName, phoneNumber, address)
+            }}>
+
+
 
                 {/* Customer Details */}
 
@@ -55,6 +85,10 @@ const CheckoutPage = () => {
                             type='text'
                             placeholder='Enter your name'
                             className='w-full p-3 rounded border'
+                            value={customerName}
+                            onChange={(e) => {
+                                setCustomerName(e.target.value)
+                            }}
                         />
 
                     </div>
@@ -72,6 +106,10 @@ const CheckoutPage = () => {
                             type='text'
                             placeholder='Enter your phone number'
                             className='w-full p-3 rounded border'
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                setphoneNumber(e.target.value)
+                            }}
                         />
 
                     </div>
@@ -88,6 +126,10 @@ const CheckoutPage = () => {
                         <textarea
                             placeholder='Enter your address'
                             className='w-full p-3 rounded border h-28'
+                            value={address}
+                            onChange={(e) => {
+                                setAddress(e.target.value)
+                            }}
                         />
 
                     </div>
@@ -130,8 +172,9 @@ const CheckoutPage = () => {
                     </button>
 
                 </div>
+            </form>
 
-            </div>
+
 
         </div>
     )

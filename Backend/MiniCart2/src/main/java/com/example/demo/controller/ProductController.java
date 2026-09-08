@@ -20,7 +20,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@PostMapping
+	@PostMapping("create")
 	public ProductEntity createProduct(@RequestBody ProductEntity product) {
 		return productService.createProduct(product);
 	}
