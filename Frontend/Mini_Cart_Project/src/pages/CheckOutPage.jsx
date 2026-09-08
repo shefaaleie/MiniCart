@@ -2,9 +2,12 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom'
 
 
 const CheckoutPage = () => {
+
+    const navigate = useNavigate()
 
     const [grandTotal, setGrandTotal] = useState(0)
 
@@ -167,7 +170,9 @@ const CheckoutPage = () => {
                     </div>
 
 
-                    <button className='w-full bg-red-400 text-white p-3 rounded mt-6'>
+                    <button onClick={() => {
+                        navigate('/orderConfirm')
+                    }} className='w-full bg-red-400 text-white p-3 rounded mt-6'>
                         Place Order
                     </button>
 
